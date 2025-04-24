@@ -12,7 +12,6 @@ int main(void)
 	printf("Enter shift amount (1-25): ");
 	scanf("%d", &shift);
 
-	// 26 letters
 	printf("Encrypted Message: ");
 	for (int i = 0; i < size; i++) {
 		if (message[i] >= 'A' && message[i] <= 'Z')
