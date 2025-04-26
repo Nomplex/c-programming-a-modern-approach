@@ -7,15 +7,15 @@
 int main(void)
 {
 	bool palindrome = true;
-	char message[MAX], ch;
-	int len = 0;
+	char message[MAX], ch, *len = message;
 
-	while (len < MAX && (ch = getchar()) != '\n')
+	while (len < message + MAX && (ch = getchar()) != '\n')
 		if (isalpha(ch))
-			*(message + len++) = toupper(ch);
+			*len++ = toupper(ch);
+	len--;
 
-	for (char *p = message, *q = message + len - 1; p <= q; p++, q--)
-		if (*p != *q) {
+	for (char *p = message; p < len; p++, len--)
+		if (*p != *len) {
 			palindrome = false;
 			break;
 		}
