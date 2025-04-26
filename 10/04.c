@@ -6,7 +6,7 @@
 #define NUM_SUITS 4
 #define NUM_CARDS 5
 
-bool straight, flush, four, three;
+bool royal_flush, straight, flush, four, three;
 int pairs;
 
 void read_cards(char hand[NUM_CARDS][2]);
@@ -93,6 +93,7 @@ bool check_duplicate(char rank, char suit, char hand[NUM_CARDS][2], int cards_re
 
 void analyze_hand(char hand[NUM_CARDS][2])
 {
+	royal_flush = true;
 	straight = true;
 	flush = true;
 	four = false;
@@ -101,17 +102,20 @@ void analyze_hand(char hand[NUM_CARDS][2])
 
 	selection_sort(hand, NUM_CARDS);
 
-	// Check for flush
-	for (int i = 1; i < NUM_CARDS; i++) {
-		if (hand[i-1][1] != hand[i][1]) {
+	// Check for royal_flush & flush
+	for (int i = 0; i < NUM_CARDS-1; i++) {
+		if (hand[i][1] != hand[i+1][1]) {
 			flush = false;
+			royal_flush = false;
 			break;
 		}
 	}
 
 	// Check for straight
-	for (int i = 1; i < NUM_CARDS; i++) {
-		if (hand[i-1][0] != (hand[i][0]) - 1) {
+	for (int i = 0; i < NUM_CARDS-1; i++) {
+		if (hand[i][0] != 7 + (i + 1))
+			royal_flush = false;
+		if (hand[i][0] != (hand[i+1][0]) - 1) {
 			straight = false;
 			break;
 		}
@@ -151,7 +155,9 @@ void selection_sort(char arr[NUM_CARDS][2], int size)
 
 void print_result(void)
 {
-	if (straight && flush)	printf("Straight flush");
+	if (royal_flush)	printf("Royal flush");
+	else if (straight &&
+		flush)		printf("Straight flush");
 	else if (four)		printf("Four of a kind");
 	else if (three &&
 		pairs == 1)	printf("Full house");
@@ -164,5 +170,6 @@ void print_result(void)
 
 	printf("\n\n");
 }
+
 
 
