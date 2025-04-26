@@ -74,8 +74,8 @@ void read_cards(char hand[NUM_CARDS][2])
 		else if (check_duplicate(rank_ch, suit_ch, hand, cards_read))
 			printf("Duplicate card; ignored.\n");
 		else {
-			hand[cards_read][0] = rank_ch;
-			hand[cards_read][1] = suit_ch;
+			hand[cards_read][0] = rank;
+			hand[cards_read][1] = suit;
 			cards_read++;
 		}
 	}
@@ -92,9 +92,6 @@ bool check_duplicate(char rank, char suit, char hand[NUM_CARDS][2], int cards_re
 
 void analyze_hand(char hand[NUM_CARDS][2])
 {
-	int num_consec = 0;
-	int rank, suit;
-
 	straight = true;
 	flush = true;
 	four = false;
@@ -104,7 +101,7 @@ void analyze_hand(char hand[NUM_CARDS][2])
 	// Check for flush
 	for (int i = 1; i < NUM_CARDS; i++) {
 		if (hand[i-1][1] != hand[i][1]) {
-			suit = false;
+			flush = false;
 			break;
 		}
 	}
