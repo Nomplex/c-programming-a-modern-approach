@@ -22,6 +22,9 @@ int main(void)
 	printOut(dequeue(q1));
 	enqueue(q1, 0);
 
+	destroy(q1);
+	destroy(q2);
+
 	return 0;
 }
 
